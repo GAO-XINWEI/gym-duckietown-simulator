@@ -540,7 +540,7 @@ class Simulator(gym.Env):
 
         if self.randomize_maps_on_reset:
             map_name = self.np_random.choice(self.map_names)
-            logger.(f"Random map chosen: {map_name}")
+            # logger.(f"Random map chosen: {map_name}")
             self._load_map(map_name)
 
         self.randomization_settings = self.randomizer.randomize(rng=self.np_random)
