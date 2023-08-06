@@ -217,7 +217,7 @@ class Simulator(gym.Env):
         camera_height: int = DEFAULT_CAMERA_HEIGHT,
         robot_speed: float = DEFAULT_ROBOT_SPEED,
         accept_start_angle_deg=DEFAULT_ACCEPT_START_ANGLE_DEG,
-        full_transparency: bool = False,
+        full_transparency: bool = True,
         user_tile_start=None,
         seed: int = None,
         distortion: bool = False,
@@ -540,7 +540,7 @@ class Simulator(gym.Env):
 
         if self.randomize_maps_on_reset:
             map_name = self.np_random.choice(self.map_names)
-            logger.info(f"Random map chosen: {map_name}")
+            logger.(f"Random map chosen: {map_name}")
             self._load_map(map_name)
 
         self.randomization_settings = self.randomizer.randomize(rng=self.np_random)
@@ -1553,7 +1553,7 @@ class Simulator(gym.Env):
         if delta_time is None:
             delta_time = self.delta_time
         self.wheelVels = action * self.robot_speed * 1
-        prev_pos = self.cur_pos
+        self.prev_pos = self.cur_pos
 
         # Update the robot's position
         self.cur_pos, self.cur_angle = _update_pos(self, action)
@@ -1564,8 +1564,8 @@ class Simulator(gym.Env):
         self.last_action = action
 
         # Compute the robot's speed
-        delta_pos = self.cur_pos - prev_pos
-        self.speed = np.linalg.norm(delta_pos) / delta_time
+        self.delta_pos = self.cur_pos - self.prev_pos
+        self.speed = np.linalg.norm(self.delta_pos) / delta_time
 
         # Update world objects
         for obj in self.objects:
@@ -1622,6 +1622,8 @@ class Simulator(gym.Env):
             info["timestamp"] = self.timestamp
             info["tile_coords"] = list(self.get_grid_coords(pos))
             # info['map_data'] = self.map_data
+        info["delta_pos"] = self.delta_pos
+        info["delta_time"] = self.delta_time
         misc = {}
         misc["Simulator"] = info
         return misc
