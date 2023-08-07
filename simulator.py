@@ -663,7 +663,7 @@ class Simulator(gym.Env):
             if tile is None:
                 msg = "The tile specified does not exist."
                 raise Exception(msg)
-            logger.debug(f"tile: {tile}")
+            # logger.debug(f"tile: {tile}")
         else:
             if self.start_tile is not None:
                 tile = self.start_tile
@@ -778,7 +778,7 @@ class Simulator(gym.Env):
         # Get the full map file path
         self.map_file_path = get_resource_path(f"{map_name}.yaml")
 
-        logger.debug(f'loading map file "{self.map_file_path}"')
+        # logger.debug(f'loading map file "{self.map_file_path}"')
 
         with open(self.map_file_path, "r") as f:
             self.map_data = yaml.load(f, Loader=yaml.Loader)
@@ -1417,12 +1417,12 @@ class Simulator(gym.Env):
         tile = self._get_tile(*coords)
         if tile is None:
             msg = f"No tile found at {pos} {coords}"
-            logger.debug(msg)
+            # logger.debug(msg)
             return False
 
         if not tile["drivable"]:
             msg = f"{pos} corresponds to tile at {coords} which is not drivable: {tile}"
-            logger.debug(msg)
+            # logger.debug(msg)
             return False
 
         return True
@@ -1523,13 +1523,13 @@ class Simulator(gym.Env):
 
         res = no_collision and all_drivable
 
-        if not res:
-            logger.debug(f"Invalid pose. Collision free: {no_collision} On drivable area: {all_drivable}")
-            logger.debug(f"safety_factor: {safety_factor}")
-            logger.debug(f"pos: {pos}")
-            logger.debug(f"l_pos: {l_pos}")
-            logger.debug(f"r_pos: {r_pos}")
-            logger.debug(f"f_pos: {f_pos}")
+        # if not res:
+        #     logger.debug(f"Invalid pose. Collision free: {no_collision} On drivable area: {all_drivable}")
+        #     logger.debug(f"safety_factor: {safety_factor}")
+        #     logger.debug(f"pos: {pos}")
+        #     logger.debug(f"l_pos: {l_pos}")
+        #     logger.debug(f"r_pos: {r_pos}")
+        #     logger.debug(f"f_pos: {f_pos}")
 
         return res
 
@@ -1835,9 +1835,9 @@ class Simulator(gym.Env):
                 ambient = [0.0, 0.0, 0.0, 1.0]
                 specular = [0.0, 0.0, 0.0, 1.0]
                 spot_direction = [0.0, -1.0, 0.0]
-                logger.debug(
-                    li=li, li_pos=li_pos, ambient=ambient, diffuse=diffuse, spot_direction=spot_direction
-                )
+                # logger.debug(
+                #     li=li, li_pos=li_pos, ambient=ambient, diffuse=diffuse, spot_direction=spot_direction
+                # )
                 gl.glLightfv(li, gl.GL_POSITION, (gl.GLfloat * 4)(*li_pos))
                 gl.glLightfv(li, gl.GL_AMBIENT, (gl.GLfloat * 4)(*ambient))
                 gl.glLightfv(li, gl.GL_DIFFUSE, (gl.GLfloat * 4)(*diffuse))
