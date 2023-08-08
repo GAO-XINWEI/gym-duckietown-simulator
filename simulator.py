@@ -505,7 +505,7 @@ class Simulator(gym.Env):
         self.road_vlist = pyglet.graphics.vertex_list(
             total, ("v3f", vertices), ("t2f", textures), ("n3f", normals), ("c4B", colors)
         )
-        logger.info("done")
+        # logger.info("done")
         # Create the vertex list for the ground quad
         verts = [
             -1,
@@ -657,7 +657,7 @@ class Simulator(gym.Env):
 
         # If the map specifies a starting tile
         if self.user_tile_start:
-            logger.info(f"using user tile start: {self.user_tile_start}")
+            # logger.info(f"using user tile start: {self.user_tile_start}")
             i, j = self.user_tile_start
             tile = self._get_tile(i, j)
             if tile is None:
@@ -677,7 +677,7 @@ class Simulator(gym.Env):
 
         # If the map specifies a starting pose
         if self.start_pose is not None:
-            logger.info(f"using map pose start: {self.start_pose}")
+            # logger.info(f"using map pose start: {self.start_pose}")
 
             i, j = tile["coords"]
             x = i * self.road_tile_size + self.start_pose[0][0]
@@ -685,7 +685,7 @@ class Simulator(gym.Env):
             propose_pos = np.array([x, 0, z])
             propose_angle = self.start_pose[1]
 
-            logger.info(f"Using map pose start. \n Pose: {propose_pos}, Angle: {propose_angle}")
+            # logger.info(f"Using map pose start. \n Pose: {propose_pos}, Angle: {propose_angle}")
 
         else:
             # Keep trying to find a valid spawn position on this tile
@@ -754,7 +754,7 @@ class Simulator(gym.Env):
         c0 = q, v0
         self.state = p.initialize(c0=c0, t0=0)
 
-        logger.info(f"Starting at {self.cur_pos} {self.cur_angle}")
+        # logger.info(f"Starting at {self.cur_pos} {self.cur_angle}")
 
         # Generate the first camera image
         obs = self.render_obs(segment=segment)
